@@ -1,0 +1,2 @@
+1. You can check the status of HDFS by running this command:
+   kubectl exec -n {{ .Release.Namespace }} -it {{ template "hadoop.fullname" . }}-hdfs-nn-0 -- /usr/local/hadoop/bin/hdfs dfsadmin -report
