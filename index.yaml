@@ -1,0 +1,20 @@
+apiVersion: v1
+entries:
+  hdfs:
+  - apiVersion: v1
+    appVersion: 2.7.3
+    created: 2018-10-29T15:40:52.128661+01:00
+    description: HDFS is the primary distributed storage used by Hadoop applications.
+    digest: 8a8e8b264b0d17a90b50ee3112b36a8289c0b6af43e9e41d5a888871a57cbc50
+    home: https://hadoop.apache.org/
+    icon: http://hadoop.apache.org/images/hadoop-logo.jpg
+    maintainers:
+    - email: oscar.bonillagonzalez@telefonica.com
+      name: Oscar Bonilla
+    name: hdfs
+    sources:
+    - https://github.com/apache/hadoop
+    urls:
+    - hdfs-1.0.0.tgz
+    version: 1.0.0
+generated: 2018-10-29T15:40:52.127525+01:00
