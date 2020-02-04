@@ -1,0 +1,15 @@
+SENTRY_SECRET_KEY:
+SENTRY_POSTGRES_HOST:
+SENTRY_DB_NAME:
+SENTRY_DB_USER:
+SENTRY_DB_PASSWORD: 
+GITHUB_APP_ID: 
+GITHUB_API_SECRET: 
+SENTRY_IMAGE: "telefonica/sentry:2020-01-29"
+SNUBA_IMAGE: "getsentry/snuba:f9e388782bf85e2ab0c879a08d3a59541ce093b2"
+SYMBOLICATOR_IMAGE: "getsentry/symbolicator:7ef2314721cb7208bde3806da3525daaed6cf41e"
+REDIS_IMAGE: "redis:5.0-alpine"
+KAFKA_IMAGE: "confluentinc/cp-kafka:5.1.2"
+CLICKHOUSE_IMAGE: "yandex/clickhouse-server:19.4"
+USER_EMAIL: "adrian.arroyocalle@telefonica.com"
+USER_PASSWORD: "123456789"
