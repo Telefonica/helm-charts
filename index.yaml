@@ -3,7 +3,7 @@ entries:
   hdfs:
   - apiVersion: v1
     appVersion: 2.7.3
-    created: 2018-10-29T15:40:52.128661+01:00
+    created: "2020-02-04T11:18:09.446912+01:00"
     description: HDFS is the primary distributed storage used by Hadoop applications.
     digest: 8a8e8b264b0d17a90b50ee3112b36a8289c0b6af43e9e41d5a888871a57cbc50
     home: https://hadoop.apache.org/
@@ -17,4 +17,20 @@ entries:
     urls:
     - hdfs-1.0.0.tgz
     version: 1.0.0
-generated: 2018-10-29T15:40:52.127525+01:00
+  sentry:
+  - apiVersion: v2
+    appVersion: "10"
+    created: "2020-02-04T11:18:09.447848+01:00"
+    description: Sentry is a monitoring tool for runtime errors
+    digest: 4c9798bc7f3883c531b9298f100372c5147c34790ffe31a7d430530bd3b74409
+    home: https://sentry.io
+    maintainers:
+    - email: adrian.arroyocalle@telefonica.com
+      name: Adrián Arroyo
+    name: sentry
+    sources:
+    - https://github.com/getsentry/onpremise/
+    urls:
+    - sentry-1.0.0.tgz
+    version: 1.0.0
+generated: "2020-02-04T11:18:09.444485+01:00"
