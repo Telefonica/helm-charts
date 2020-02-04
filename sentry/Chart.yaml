@@ -1,0 +1,11 @@
+apiVersion: v2
+description: Sentry is a monitoring tool for runtime errors
+name: sentry
+version: 1.0.0
+appVersion: 10.0
+home: https://sentry.io
+sources:
+- https://github.com/getsentry/onpremise/
+maintainers:
+- name: Adrián Arroyo
+  email: adrian.arroyocalle@telefonica.com

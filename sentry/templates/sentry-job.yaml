@@ -1,0 +1,58 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sentry-migration
+spec:
+  template:
+    spec:
+      initContainers:
+      - name: snuba-bootstrap
+        image: getsentry/snuba:latest
+        args: ["bootstrap", "--force"]
+        env:
+        - name: SNUBA_SETTINGS
+          value: docker
+        - name: CLICKHOUSE_HOST
+          value: clickhouse
+        - name: CLICKHOUSE_PORT
+          value: "9000"
+        - name: DEFAULT_BROKERS
+          value: sentry-kafka:9092
+        - name: REDIS_HOST
+          value: redis
+        - name: REDIS_PORT
+          value: "6379"
+      - name: sentry-migration
+        image: {{ .Values.SENTRY_IMAGE }}
+        command: ["sh", "-c", "sentry upgrade --noinput || exit 0"]
+        env:
+        - name: SENTRY_SECRET_KEY
+          value: {{ .Values.SENTRY_SECRET_KEY }}
+        - name: SENTRY_POSTGRES_HOST
+          value: {{ .Values.SENTRY_POSTGRES_HOST }}
+        - name: SENTRY_DB_NAME
+          value: {{ .Values.SENTRY_DB_NAME }}
+        - name: SENTRY_DB_USER
+          value: {{ .Values.SENTRY_DB_USER }}
+        - name: SENTRY_DB_PASSWORD
+          value: {{ .Values.SENTRY_DB_PASSWORD }}
+      - name: sentry-createuser
+        image: {{ .Values.SENTRY_IMAGE }}
+        command: ["sh", "-c", "sentry createuser --no-input --email {{ .Values.USER_EMAIL }} --superuser --password {{ .Values.USER_PASSWORD }} || exit 0"]
+        env:
+        - name: SENTRY_SECRET_KEY
+          value: {{ .Values.SENTRY_SECRET_KEY }}
+        - name: SENTRY_POSTGRES_HOST
+          value: {{ .Values.SENTRY_POSTGRES_HOST }}
+        - name: SENTRY_DB_NAME
+          value: {{ .Values.SENTRY_DB_NAME }}
+        - name: SENTRY_DB_USER
+          value: {{ .Values.SENTRY_DB_USER }}
+        - name: SENTRY_DB_PASSWORD
+          value: {{ .Values.SENTRY_DB_PASSWORD }}
+      containers:
+      - name: void
+        image: "alpine:3.10.2"
+        command: ["true"]
+      restartPolicy: Never
+    

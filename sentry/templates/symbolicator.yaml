@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: symbolicator
+  labels:
+    app: symbolicator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: symbolicator
+  template:
+    metadata:
+      labels:
+        app: symbolicator
+    spec:
+      containers:
+      - name: symbolicator
+        image: getsentry/symbolicator:latest
+        args: ["run"]
+        ports:
+        - containerPort: 3021
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: symbolicator
+spec:
+  selector:
+    app: symbolicator
+  type: ClusterIP
+  ports:
+  - protocol: TCP
+    port: 3021
+    targetPort: 3021
