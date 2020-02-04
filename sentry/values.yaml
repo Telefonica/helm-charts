@@ -5,6 +5,8 @@ SENTRY_DB_USER:
 SENTRY_DB_PASSWORD: 
 GITHUB_APP_ID: 
 GITHUB_API_SECRET: 
+# XXX we use a custom image because Sentry has a bug related to autocommit DSN. It was resolved in the onpromise code but not in the images https://github.com/getsentry/onpremise/pull/195
+# code for the docker image is the folder docker, along with the chart
 SENTRY_IMAGE: "telefonica/sentry:2020-01-29"
 SNUBA_IMAGE: "getsentry/snuba:f9e388782bf85e2ab0c879a08d3a59541ce093b2"
 SYMBOLICATOR_IMAGE: "getsentry/symbolicator:7ef2314721cb7208bde3806da3525daaed6cf41e"
