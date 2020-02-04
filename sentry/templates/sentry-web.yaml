@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sentry-web
+  labels:
+    app: sentry-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sentry-web
+  template:
+    metadata:
+      labels:
+        app: sentry-web
+    spec:
+      containers:
+      - name: sentry-web
+        image: {{ .Values.SENTRY_IMAGE }}
+        ports:
+        - containerPort: 9000
+        resources:
+          limits:
+            cpu: 0.5
+            memory: 512Mi
+          requests:
+            cpu: 250m
+            memory: 50Mi
+        env:
+        - name: SNUBA
+          value: 'http://snuba-api:1218'
+        - name: SENTRY_SECRET_KEY
+          value: {{ .Values.SENTRY_SECRET_KEY }}
+        - name: SENTRY_POSTGRES_HOST
+          value: {{ .Values.SENTRY_POSTGRES_HOST }}
+        - name: SENTRY_DB_NAME
+          value: {{ .Values.SENTRY_DB_NAME }}
+        - name: SENTRY_DB_USER
+          value: {{ .Values.SENTRY_DB_USER }}
+        - name: SENTRY_DB_PASSWORD
+          value: {{ .Values.SENTRY_DB_PASSWORD }}
+        - name: GITHUB_APP_ID
+          value: {{ .Values.GITHUB_APP_ID }}
+        - name: GITHUB_API_SECRET
+          value: {{ .Values.GITHUB_API_SECRET }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sentry-web
+spec:
+  selector:
+    app: sentry-web
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 9000

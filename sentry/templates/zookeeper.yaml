@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zookeeper
+  labels:
+    app: zookeeper
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zookeeper
+  template:
+    metadata:
+      labels:
+        app: zookeeper
+    spec:
+      containers:
+      - name: zookeeper
+        image: confluentinc/cp-zookeeper:5.1.2
+        ports:
+        - containerPort: 2181
+        env:
+        - name: ZOOKEEPER_CLIENT_PORT
+          value: "2181"
+        - name: CONFLUENT_SUPPORT_METRICS_ENABLE
+          value: "false"
+        - name: ZOOKEEPER_LOG4J_ROOT_LOGLEVEL
+          value: "WARN"
+        - name: ZOOKEEPER_TOOLS_LOG4J_LOGLEVEL
+          value: "WARN"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zookeeper
+spec:
+  selector:
+    app: zookeeper
+  type: ClusterIP
+  ports:
+  - protocol: TCP
+    port: 2181
+    targetPort: 2181

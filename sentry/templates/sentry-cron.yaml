@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sentry-cron
+  labels:
+    app: sentry-cron
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sentry-cron
+  template:
+    metadata:
+      labels:
+        app: sentry-cron
+    spec:
+      containers:
+      - name: sentry-cron
+        image: {{ .Values.SENTRY_IMAGE }}
+        command: ["sentry"]
+        args: ["run", "cron"]
+        resources:
+          limits:
+            cpu: 0.5
+            memory: 256Mi
+          requests:
+            cpu: 250m
+            memory: 50Mi
+        env:
+        - name: SNUBA
+          value: 'http://snuba-api:1218'
+        - name: SENTRY_SECRET_KEY
+          value: {{ .Values.SENTRY_SECRET_KEY }}
+        - name: SENTRY_POSTGRES_HOST
+          value: {{ .Values.SENTRY_POSTGRES_HOST }}
+        - name: SENTRY_DB_NAME
+          value: {{ .Values.SENTRY_DB_NAME }}
+        - name: SENTRY_DB_USER
+          value: {{ .Values.SENTRY_DB_USER }}
+        - name: SENTRY_DB_PASSWORD
+          value: {{ .Values.SENTRY_DB_PASSWORD }}
